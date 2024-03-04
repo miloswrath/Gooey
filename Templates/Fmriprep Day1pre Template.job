@@ -1,0 +1,18 @@
+#!/bin/bash
+#$ -pe smp 56
+#$ -q UI
+#$ -m bea
+#$ -M matthew-sodoma@uiowa.edu
+#$ -j y
+#$ -o /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/code/fmriprep_v22.0.2/job_scripts/day1pre/out/
+OMP_NUM_THREADS=10
+singularity run --cleanenv -H ${HOME}/singularity_home -B /Shared/vosslabhpc:/mnt \
+/Shared/vosslabhpc/UniversalSoftware/SingularityContainers/fmriprep-v22.0.2.sif \
+/mnt/Projects/BikeExtend/3-Experiment/2-Data/BIDS /mnt/Projects/BETTER_IIB/3-Experiment/2-Data/BIDS/derivatives/fmriprep_v22.0.2 \
+--skip-bids-validation \
+participant --participant_label SUBJECT \
+--bids-filter-file /Shared/vosslabhpc/Projects/BETTER_IIB/3-Experiment/2-Data/BIDS/derivatives/code/fmriprep_v22.0.2/job_scripts/TEMPLATE-filter_day1pre.json \
+-w /nfsscratch/Users/${USER}/work/BikeExtendfmriprep_v22.0.2_day1pre \
+--write-graph --mem_mb 35000 --omp-nthreads 10 --nthreads 16 --output-spaces {T1w,MNI152NLin2009cAsym,fsaverage5} --cifti-output --use-aroma --dummy-scans 5 \
+--fs-license-file /mnt/UniversalSoftware/freesurfer_license.txt \
+--fs-subjects-dir /mnt/Projects/BETTER_IIB/3-Experiment/2-Data/BIDS/derivatives/freesurfer_7.1/

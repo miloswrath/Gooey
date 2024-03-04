@@ -1,0 +1,19 @@
+#!/bin/bash
+#$ -pe smp 56
+#$ -q UI
+#$ -m bea
+#$ -M zjgilliam@uiowa.edu
+#$ -j y
+#$ -o /Shared/vosslabhpc/Projects/BETTER_B2/3-Experiment/2-Data/BIDS/derivatives/code/xcp-d/out
+#$ -e /Shared/vosslabhpc/Projects/BETTER_B2/3-Experiment/2-Data/BIDS/derivatives/code/xcp-d/err
+OMP_NUM_THREADS=10
+singularity run --cleanenv -H ${HOME}/singularity_home -B /Shared/vosslabhpc:/mnt \
+/Shared/vosslabhpc/UniversalSoftware/SingularityContainers/xcp_d_v0.6.1.sif \
+/mnt/Projects/BETTER_B2/3-Experiment/2-Data/BIDS/derivatives/fmriprep_v23.2.0 \
+/mnt/Projects/BETTER_B2/3-Experiment/2-Data/BIDS/derivatives/xcp_d_v0.6.1 \
+participant --participant_label SUBJECT \
+--dummy-scans 5 \
+-f 0.5 \
+--atlases 4S456Parcels
+
+# Path: 

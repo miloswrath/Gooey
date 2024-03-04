@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#$ -pe smp 56
+#$ -q UI
+#$ -m bea
+#$ -M bryan-madero@uiowa.edu
+#$ -e /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/code/xcp/err
+#$ -o /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/code/xcp/out
+
+singularity run -B /Users/bmadero/xcpEngine/utils:/xcpEngine/utils \
+-H /Users/bmadero/singularity_home \
+/Shared/vosslabhpc/UniversalSoftware/SingularityContainers/xcpEngine_v1.2.3.sif \
+-d /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/code/xcp/job_scripts/day1pre/fc-acompcor.dsn \
+-c /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/code/xcp/job_scripts/day1pre/xcp_full_list.csv \
+-o /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/xcpEngine/xcpOutput_acompcor_EXTEND/xcpOutput_compcor_D1 \
+-t 2 -r /Shared/vosslabhpc/Projects/BikeExtend/3-Experiment/2-Data/BIDS/derivatives/

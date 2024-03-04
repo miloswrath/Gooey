@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#$ -N sub-SUBJECT_xcp_d
+#$ -pe smp 10
+#$ -q PINC,CCOM,UI
+#$ -j y
+#$ -o LOGDIR
+OMP_NUM_THREADS=8
+
+
+
+#Set up dependencies
+singularityDir={directory of the singularity files}
+
+scriptDir={code directory in shared server}
+source ${scriptDir}/sourcePack.sh
+
+xcpDir={derivatives directory}xcp_d/sub-SUBJECT/ses-SESSION
+
+##########
+
+#Run XCP-D
+singularity run --cleanenv \
+-B /Users/USER/work:/work \
+${singularityDir}/xcp_d.sif \
+PREPDIR XCPDIR participant --participant-label SUBJECT \
+--input-type fmriprep \
+--smoothing 6 \
+-p 36P \
+--dummy-scans 5 \
+--lower-bpf 0.008 \
+--upper-bpf 0.08 \
+-f 0.5 \
+-w work \
+--resource-monitor
+
+
+
+
