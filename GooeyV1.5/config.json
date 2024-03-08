@@ -1,0 +1,13 @@
+{
+    "User Email": "asdas",
+    "BIDS Directory": "test",
+    "fmriprep Container Directory": "testasdasdas",
+    "fmriprep Job File Output Directory": "test",
+    "fmriprep Output Directory": "tedasdst",
+    "fmriprep Error Output Directory": "test",
+    "fmriprep Freesurfer License Directory": "test",
+    "xcp-d Container Directory": "testasdasd",
+    "xcp-d Job File Output Directory": "test",
+    "xcp-d Output Directory": "test",
+    "xcp-d Error Output Directory": "test"
+}

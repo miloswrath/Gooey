@@ -1,6 +1,10 @@
 # Importing necessary libraries
 import tkinter as tk
 from tkinter import scrolledtext, ttk
+import os
+import json
+
+import sv_ttk as sv_ttk
 
 # Function to update the shell script display based on user inputs and selections
 def update_shell_script(*args):
@@ -21,6 +25,7 @@ def update_shell_script(*args):
     # The string content is not updated here as per instruction
     shell_script = f"""
     #fmriscript
+
     #!/bin/bash
     #$ -pe smp 56
     #$ -q UI
@@ -41,7 +46,11 @@ def update_shell_script(*args):
     --atlases 4S456Parcels
     #path: {fmriprep_job_file_out_dir}
 
+
+
+
     #xcpdscript
+
     #!/bin/bash
     #$ -pe smp 56
     #$ -q UI
@@ -113,6 +122,20 @@ right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 # Starting row for the grid layout
 row_index = 0
 
+def save_config(self):
+    config_data = {name: var.get() for name, var in self.variables.items()}
+    with open("config.json", "w") as file:
+        json.dump(config_data, file, indent=4)
+    messagebox.showinfo("Info", "Configuration saved.")
+    
+def load_config(self):
+    if os.path.exists("config.json"):
+        with open("config.json", "r") as file:
+            config_data = json.load(file)
+            for name, value in config_data.items():
+                if name in self.variables:
+                    self.variables[name].set(value)
+
 # Widget for BIDS Directory
 ttk.Label(left_frame, text="BIDS Directory:").grid(row=row_index, column=0, sticky=tk.W, padx=5, pady=2)
 ttk.Entry(left_frame, textvariable=bids_dir_var).grid(row=row_index, column=1, sticky=tk.EW, padx=5, pady=2)
@@ -175,6 +198,8 @@ ttk.Entry(left_frame, textvariable=subject_ids_var).grid(row=row_index, column=1
 # Right frame widget (shell script display)
 shell_script_display = scrolledtext.ScrolledText(right_frame, wrap=tk.WORD, state=tk.DISABLED)
 shell_script_display.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+sv_ttk.set_theme("Dark")
 
 # Initial update of the shell script display
 update_shell_script()
